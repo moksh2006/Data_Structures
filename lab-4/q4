@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+struct DNode {
+    char data;
+    DNode* next;
+    DNode* prev;
+    DNode(char v): data(v), next(nullptr), prev(nullptr) {}
+};
+
+bool isPalindrome(DNode* head) {
+    if (!head) return true;
+    DNode* left = head;
+    DNode* right = head;
+    while (right->next) right = right->next;
+    while (left != right && right->next != left) {
+        if (left->data != right->data) return false;
+        left = left->next;
+        right = right->prev;
+    }
+    return true;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    DNode* head = nullptr;
+    DNode* tail = nullptr;
+
+    for (int i = 0; i < n; i++) {
+        char c;
+        cin >> c;
+        DNode* p = new DNode(c);
+        if (!head) head = tail = p;
+        else { tail->next = p; p->prev = tail; tail = p; }
+    }
+
+    if (isPalindrome(head)) cout << "Palindrome";
+    else cout << "Not Palind
